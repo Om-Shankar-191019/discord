@@ -4,7 +4,7 @@ import "./App.css";
 import Dashboard from "./Dashboard/Dashboard";
 import LoginPage from "./authPages/LoginPage/LoginPage";
 import RegisterPage from "./authPages/RegisterPage/RegisterPage";
-
+import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <>
@@ -15,6 +15,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </>
   );
 }
