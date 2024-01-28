@@ -18,7 +18,7 @@ const Dashboard = () => {
   const currentUser = useSelector((state) => state.auth.currentUser);
   useEffect(() => {
     if (currentUser) {
-      connectWithSocketServer();
+      connectWithSocketServer(currentUser);
     }
   }, [currentUser]);
   return (
