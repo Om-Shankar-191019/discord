@@ -8,6 +8,9 @@ import Typography from "@mui/material/Typography";
 import { validateMail } from "../../shared/utils/validators";
 import InputWithLabel from "../../shared/components/InputWithLabel";
 import CustomPrimaryButton from "../../shared/components/CustomPrimaryButton";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const AddFriendDialog = ({
   isDialogOpen,
@@ -16,9 +19,25 @@ const AddFriendDialog = ({
 }) => {
   const [mail, setMail] = useState("");
   const [isFormValid, setIsFormValid] = useState("");
-
-  const handleSendInvitation = () => {
+  const token = useSelector((state) => state.auth.currentUser?.token);
+  const handleSendInvitation = async () => {
     // send friend request to server
+    const data = {
+      targetMailAddress: mail,
+      token,
+    };
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_SERVER_DOMAIN}/api/friend-invitation/invite`,
+        data
+      );
+      toast(res.data);
+      console.log(res);
+    } catch (error) {
+      if (error?.response?.data) toast(error.response.data);
+      else console.log(error);
+    }
+    handleCloseDialog();
   };
 
   const handleCloseDialog = () => {
